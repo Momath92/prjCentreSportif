@@ -4,6 +4,8 @@ from django.contrib.auth.models import User
 from datetime import date
 
 
+
+
 class Client(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     nom_client = models.CharField(max_length=255)
@@ -63,6 +65,8 @@ class Moniteur(models.Model):
     nom = models.CharField(max_length=255)
     prenom = models.CharField(max_length=255)
     email = models.EmailField(max_length=255, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    password = password = models.CharField(max_length=255, default='default_password')
 
     # def __str__(self):
     #     return f"{self.prenom} {self.nom}"    

@@ -7,7 +7,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from datetime import date
-
+from .models import Moniteur, Horaire
 
 def accueil(request):
     activite = Activite.objects.all()
@@ -153,6 +153,35 @@ def log_out(request):
 def dashboard(request):
     return render(request, 'admin.html', {})
 
+
+
+def moniteur_login(request):
+    error = None
+    if request.method == 'POST':
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        try:
+            moniteur = Moniteur.objects.get(email=email)
+            user = authenticate(request, username=moniteur.user.username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('moniteur_dashboard')
+            else:
+                error = "Email ou mot de passe incorrect"
+        except Moniteur.DoesNotExist:
+            error = "Moniteur non trouvé"
+
+    return render(request, 'moniteur_login.html', {'error': error})
+
+@login_required
+def moniteur_dashboard(request):
+    moniteur = request.user.moniteur
+    return render(request, 'moniteur_dashboard.html', {'moniteur': moniteur})
+
+
+def moniteur(request):
+    clients = Client.objects.all()  # Récupérer tous les utilisateurs
+    return render(request, 'moniteur.html', {'clients': clients})
 
 
 
