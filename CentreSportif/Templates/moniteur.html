@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Moniteur</title>
+</head>
+
+<body>
+    <h1>Bienvenue, {{ moniteur.prenom }} {{ moniteur.nom }}</h1>
+    <h2>Activités et horaires</h2>
+    <h1>Moniteur</h1>
+    <h2>Activités et horaires</h2>
+
+    <h2>Liste des utilisateurs</h2>
+    <ul>
+        {% for client in clients %}
+        <li>{{ client.nom_client }} {{ client.prenom_client }}</li>
+        {% endfor %}
+    </ul>
+
+</body>
+
+</html>

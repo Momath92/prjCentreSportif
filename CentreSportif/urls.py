@@ -1,11 +1,15 @@
 from django.urls import path
-from .views import accueil, sign_up, sign_in, log_out, inscription, moniteur_detail
+from . import views
 
 urlpatterns = [
-    path('', accueil, name='accueil'),
-    path('register/', sign_up, name="sign_up"),
-    path('login/', sign_in, name="sign_in"),
-    path('logout/', log_out, name="log-out"),
-    path('inscription/<int:activite_id>/', inscription, name='inscription'),
-    path('moniteur/dashboard/', moniteur_detail, name='moniteur_dashboard'),
+    path('', views.accueil, name='accueil'),
+    path('register/', views.sign_up, name="sign_up"),
+    path('login/', views.sign_in, name="sign_in"),
+    path('logout/', views.log_out, name="log-out"),
+    path('inscription/<int:activite_id>/', views.inscription, name='inscription'),
+    path('inscription_activite/<int:activite_id>/', views.inscription_activite, name='inscription_activite'),
+    path('moniteur/login/', views.moniteur_login, name='moniteur_login'),
+    path('moniteur/', views.moniteur, name='moniteur'),
+    
+    # path('confirmation_activite/<int:inscription_id>/', views.confirmation_activite, name='confirmation_activite'),
 ]
