@@ -1,0 +1,33 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Tableau de bord de {{ moniteur.prenom }} {{ moniteur.nom }}</h1>
+
+<h2>Mes cours</h2>
+<ul>
+    {% for cours in cours %}
+    <li>
+        {{ cours.nom_activite }}
+        <ul>
+            <li>Horaires :</li>
+            <ul>
+                {% for horaire in horaires %}
+                    {% if horaire.activite == cours %}
+                        <li>{{ horaire.jour }} : {{ horaire.heure_debut }} - {{ horaire.heure_fin }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+            <li>Étudiants inscrits :</li>
+            <ul>
+                {% for inscription in inscriptions %}
+                    {% if inscription.activite == cours %}
+                        <li>{{ inscription.client.prenom_client }} {{ inscription.client.nom_client }}</li>
+                    {% endif %}
+                {% endfor %}
+            </ul>
+        </ul>
+    </li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

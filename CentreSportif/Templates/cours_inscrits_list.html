@@ -1,0 +1,13 @@
+{% extends "base_generic.html" %}
+
+{% block content %}
+<h1>Étudiants inscrits dans le cours {{ cours.nom_activite }}</h1>
+<ul>
+    {% for inscription in inscriptions %}
+    <li>
+        {{ inscription.client.prenom_client }} {{ inscription.client.nom_client }}
+    </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'moniteur_cours_list' cours.moniteur.id %}">Retour à la liste des cours</a>
+{% endblock %}

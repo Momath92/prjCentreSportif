@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Détails du Moniteur</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f0f2f5;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 50px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #007bff;
+        }
+        .course-list, .student-list {
+            margin-top: 20px;
+        }
+        .course-item, .student-item {
+            background-color: #f8f9fa;
+            margin-bottom: 10px;
+            padding: 15px;
+            border-radius: 5px;
+            color: #333;
+            transition: transform 0.3s;
+            border: 1px solid #dee2e6;
+        }
+        .course-item:hover, .student-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .course-item h4 {
+            margin-top: 0;
+        }
+        .btn-toggle {
+            cursor: pointer;
+            color: #007bff;
+            text-decoration: underline;
+            display: block;
+            margin-bottom: 10px;
+        }
+        .toggle-content {
+            display: none;
+            margin-top: 10px;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const toggles = document.querySelectorAll('.btn-toggle');
+            toggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const target = this.nextElementSibling;
+                    if (target.style.display === "none" || target.style.display === "") {
+                        target.style.display = "block";
+                    } else {
+                        target.style.display = "none";
+                    }
+                });
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Détails du Moniteur</h1>
+        <h2>{{ moniteur.prenom }} {{ moniteur.nom }}</h2>
+
+        <div class="course-list">
+            <h3>Cours qu'il peut enseigner :</h3>
+            {% for cour in cours %}
+                <div class="course-item">
+                    <h4>{{ cour.nom_activite }}</h4>
+                    <span class="btn-toggle">Voir les horaires</span>
+                    <div class="toggle-content">
+                        <p>Horaires :</p>
+                        <ul>
+                            {% for horaire in horaires %}
+                                {% if horaire.activite.id == cour.id %}
+                                    <li>{{ horaire.jour }} : {{ horaire.heure_debut }} - {{ horaire.heure_fin }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    <span class="btn-toggle">Voir les étudiants inscrits</span>
+                    <div class="toggle-content">
+                        <p>Étudiants inscrits :</p>
+                        <ul>
+                            {% for inscription in inscriptions %}
+                                {% if inscription.activite.id == cour.id %}
+                                    <li>{{ inscription.client.prenom_client }} {{ inscription.client.nom_client }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>
